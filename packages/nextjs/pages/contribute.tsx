@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useMemo, useState } from 'react';
 import type { NextPage } from 'next';
 import { MetaHeader } from '~~/components/MetaHeader';
@@ -25,7 +26,7 @@ const Contribute: NextPage = () => {
   const { writeAsync } = useScaffoldContractWrite({
     contractName: "WorldBoatClimateActions",
     functionName: "safeMint",
-    args: ["0x42010e15271F3803884685030C37a3C464b855aD", "hello", 42n, 0,0,1, true, 666n],
+    args: ["0x42010e15271F3803884685030C37a3C464b855aD", "hello", 42n, 0n,0n,1n, true, 666n],
     value: 0n,
     blockConfirmations: 1,
     onBlockConfirmation: txnReceipt => {
