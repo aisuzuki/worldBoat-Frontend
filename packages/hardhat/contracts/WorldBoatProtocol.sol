@@ -23,6 +23,8 @@ contract WorldBoatProtocol {
 
 	address private _manager;
 
+	event ProjectCreated(CO2OffsetProject project);
+
 	mapping(uint => CO2OffsetProject) private _projects;
 	mapping(address => bool) public _trustedProjects;
 
@@ -68,7 +70,7 @@ contract WorldBoatProtocol {
 			_worldBoatClimateActions.currentTokenId()
 		);
 
-		if (!_trustedProjects[msg.sender]) return;
+		//		if (!_trustedProjects[msg.sender]) return;
 
 		for (
 			uint tokenId = 1; // 1 origin
@@ -78,17 +80,27 @@ contract WorldBoatProtocol {
 			console.log("tokenId = %d", tokenId);
 			ClimateActionStats memory stat = _worldBoatClimateActions
 				.getTokenStats(tokenId);
+
 			if (stat.projectId == 0 || stat.projectId == _projectId) {
 				// open to any projects, or project Id matchs
 				if (stat.category == _category) {
+					uint offset = _co2OffsetPlanned;
+					if (stat.co2OffsetPlanned <= _co2OffsetPlanned) {
+						offset = stat.co2OffsetPlanned;
+						_projects[_projectId].co2OffsetPlanned =
+							_co2OffsetPlanned -
+							stat.co2OffsetPlanned;
+					}
 					_worldBoatClimateActions.projectFulfillment(
 						tokenId,
-						_co2OffsetPlanned,
+						offset,
 						_metadataProject
 					);
 				}
 			}
 		}
+
+		emit ProjectCreated(_projects[_projectId]);
 	}
 
 	function closeProject(uint _projectId) public {

@@ -30,11 +30,20 @@ contract WorldBoatClimateActions is
 	mapping(uint256 => ClimateActionStats) private _tokenStats;
 
 	address public treasuryAddress;
+	address private erc20Token;
 
 	uint public currentTokenId = 0;
 
-	constructor(address _treasuryAddress) ERC721("WorldBoat", "Wo") Ownable() {
+	event ProjectFulfillment(uint tokenId);
+
+	event ActionCreated(uint tokenId, ClimateActionStats stats);
+
+	constructor(
+		address _treasuryAddress,
+		address _erc20Token
+	) ERC721("WorldBoat", "Wo") Ownable() {
 		treasuryAddress = _treasuryAddress;
+		erc20Token = _erc20Token;
 	}
 
 	function safeMint(
@@ -45,9 +54,8 @@ contract WorldBoatClimateActions is
 		uint regionalCode,
 		uint category,
 		bool openFundingOrClosed,
-		address erc20Token,
 		uint tokenAmount
-	) public onlyOwner {
+	) public {
 		console.log("sender = ", msg.sender);
 		require(
 			IERC20(erc20Token).transferFrom(
@@ -76,6 +84,8 @@ contract WorldBoatClimateActions is
 		});
 
 		_tokenStats[currentTokenId] = stats;
+
+		emit ActionCreated(currentTokenId, stats);
 	}
 
 	function projectFulfillment(
@@ -87,6 +97,11 @@ contract WorldBoatClimateActions is
 			msg.sender == treasuryAddress,
 			"Unauthorized Access! Protocol only"
 		);
+		console.log("co2fulfill===== %d", _co2Fulfilled);
+		console.log(
+			"tokenstat offsetplanned===== %d",
+			_tokenStats[_tokenId].co2OffsetPlanned
+		);
 		require(
 			_co2Fulfilled <= _tokenStats[_tokenId].co2OffsetPlanned,
 			"Goal already reached!"
@@ -94,6 +109,8 @@ contract WorldBoatClimateActions is
 		_tokenStats[_tokenId].co2ActuallyOffset += _co2Fulfilled;
 		_tokenStats[_tokenId].co2OffsetPlanned -= _co2Fulfilled;
 		_tokenStats[_tokenId].metadataProject = _metadataFullfillment;
+
+		emit ProjectFulfillment(_tokenId);
 	}
 
 	function safeMint(address to, ClimateActionStats memory stats) internal {
