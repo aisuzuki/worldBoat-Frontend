@@ -38,6 +38,7 @@ const ERC721TokensOverview: NextPage = () => {
   const [expandedTokenId, setExpandedTokenId] = useState<number | null>(null);
   const { data: walletClient } = useWalletClient();
 
+  console.log(walletClient)
   const { data: stat } = useScaffoldContractRead({
     contractName: "WorldBoatClimateActions",
     functionName: "getTokenStats",

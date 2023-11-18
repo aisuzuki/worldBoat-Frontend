@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import { MetaHeader } from '~~/components/MetaHeader';
 import { useScaffoldContractWrite } from '~~/hooks/scaffold-eth';
-import { useAccount } from 'wagmi';
+
 
 const CreateProject: NextPage = () => {
   // State for each field in the struct
