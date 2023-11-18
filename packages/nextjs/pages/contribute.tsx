@@ -25,7 +25,7 @@ const Contribute: NextPage = () => {
   const { writeAsync } = useScaffoldContractWrite({
     contractName: "WorldBoatClimateActions",
     functionName: "safeMint",
-    args: ["0x42010e15271F3803884685030C37a3C464b855aD", "hello", 42n, 0,0,1, true, "0x85b815f9b358d90c4338c216b9f346be47f820fa", 666n],
+    args: ["0x42010e15271F3803884685030C37a3C464b855aD", "hello", 42n, 0,0,1, true, 666n],
     value: 0n,
     blockConfirmations: 1,
     onBlockConfirmation: txnReceipt => {
@@ -134,6 +134,29 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
     // Process the contribution here 
   };
 
+
+  const mockSubmit = (e) => {
+    e.preventDefault();
+
+    const userChoices = {
+      co2Percentage,
+      region,
+      pricePoint,
+      category
+    };
+
+    console.log("User Choices:", userChoices);
+
+
+    //Contract address for ClimateAction: 
+    // 0xfdd6076e296eF65E211A4c894FEfC52880e86935 
+
+    //Contract address for token topup:
+    //0x85B815f9B358d90C4338C216B9F346BE47F820fA
+
+    // Process the contribution here 
+  };
+
   const handlePricePointSelect = (value) => {
     setPricePoint(value);
   };
@@ -144,7 +167,7 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
   <MetaHeader title="Contribute to WorldBoat Protocol" />
       <div className="container mx-auto p-6">
         <h1 className="text-3xl text-center mb-6">Contribute to WorldBoat Protocol</h1>
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
+        <form onSubmit={mockSubmit} className="max-w-lg mx-auto">
           <div className="flex items-center mb-4">
             <div className="flex-1 mr-4">
               <label className="block text-sm font-medium text-gray-700">CO2 Offset in Tons</label>
@@ -197,7 +220,7 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
         </div>
 
           <div className="flex justify-center">
-            <button type="submit" className="btn btn-primary">Contribute</button>
+            <button type="submit" onClick={handleSubmit} className="btn btn-primary">Contribute</button>
           </div>
         </form>
       </div>

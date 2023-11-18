@@ -1451,13 +1451,18 @@ const deployedContracts = {
       },
     },
     WorldBoatClimateActions: {
-      address: "0xfdd6076e296eF65E211A4c894FEfC52880e86935",
+      address: "0xe8b80E3664Bd8fD357f6Ed2B33e32e320762c648",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
               name: "_treasuryAddress",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_erc20Token",
               type: "address",
             },
           ],
@@ -1835,11 +1840,6 @@ const deployedContracts = {
               type: "bool",
             },
             {
-              internalType: "address",
-              name: "erc20Token",
-              type: "address",
-            },
-            {
               internalType: "uint256",
               name: "tokenAmount",
               type: "uint256",
@@ -2098,7 +2098,7 @@ const deployedContracts = {
       },
     },
     WorldBoatProtocol: {
-      address: "0x2753D07A5B040DF342721e33058942fAd9Bb3E3e",
+      address: "0xE496D96A1b9F6C66702A4585B60d56C6540037F4",
       abi: [
         {
           inputs: [],

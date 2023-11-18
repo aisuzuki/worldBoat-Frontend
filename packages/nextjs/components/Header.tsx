@@ -31,8 +31,8 @@ export const menuLinks: HeaderMenuLink[] = [
   },
 
   {
-    label: "Check Your Funded Projects",
-    href: "/funded-projects",
+    label: "Create a Project",
+    href: "/create-project",
     icon: <CheckCircleIcon className="h-4 w-4" />,
   },
   {
