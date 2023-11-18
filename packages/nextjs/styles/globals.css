@@ -11,6 +11,7 @@ body {
   min-height: 100vh;
 }
 
+
 h1,
 h2,
 h3,
@@ -29,4 +30,85 @@ p {
 
 .btn.btn-ghost {
   @apply shadow-none;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.feature-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  height: 256px;
+  background: linear-gradient(45deg, #6b73ff, #000dff, #0082ff, #00ffcb);
+  background-size: 300% 300%;
+  animation: gradientAnimation 6s ease infinite;
+}
+
+
+.feature-box-project {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  height: 512;
+  background: linear-gradient(45deg, #8d8e9e, #2e36d8, #0082ff, #00ffcb);
+  background-size: 200% 200%;
+  animation: gradientAnimation 12s ease infinite;
+}
+
+
+.feature-box:hover {
+  background: linear-gradient(45deg, #ff6ec4, #7873ff);
+  background-size: 300% 300%;
+  animation: gradientAnimation 6s ease infinite;
+}
+
+.animated-background {
+
+  background-size:100% 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-background::before {
+ 
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(60deg, #6b73ff, #2e36d1, #0082ff, #00ffcb);
+  background-size: 300% 300%;
+  background-position: 0% 50%;
+  z-index: -1;
+  animation: moveBackground 20s ease infinite;
+}
+
+@keyframes moveBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.green-stick-figure {
+  color: green;
 }
