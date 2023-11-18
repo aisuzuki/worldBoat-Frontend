@@ -12103,6 +12103,7 @@ __metadata:
   dependencies:
     husky: ~8.0.3
     lint-staged: ~13.2.2
+    node-gyp: ^10.0.1
   languageName: unknown
   linkType: soft
 
