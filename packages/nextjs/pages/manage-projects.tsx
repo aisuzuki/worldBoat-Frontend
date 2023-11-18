@@ -26,7 +26,7 @@ const ERC721TokensOverview: NextPage = () => {
 
 
   // Setup contract write hook
-  const { data: tokenStats } = useScaffoldContractRead({
+  const { data: stat } = useScaffoldContractRead({
     contractName: "WorldBoatClimateActions",
     functionName: "getTokenStats",
     args: [1n],
@@ -39,6 +39,7 @@ const ERC721TokensOverview: NextPage = () => {
   const [expandedTokenId, setExpandedTokenId] = useState<number | null>(null);
   const { data: walletClient } = useWalletClient();
   
+  console.log(stat)
   console.log(walletClient)
   useEffect(() => {
     const fetchTokens = async () => {
@@ -50,12 +51,20 @@ const ERC721TokensOverview: NextPage = () => {
         //for (let i = 0; i < balance; i++) {
           const tokenIdArg = BigInt(1n);
           // eslint-disable-next-line prettier/prettier
-          const tokenStats = tokenStats({  args: [1n],});
+
 
           let tokenId = 1;
-          if (tokenStats?.data) {
-            tokensData.push({ tokenId, ...tokenStats.data });
-          }
+          const owner = stat?.owner || "";
+          const co2OffsetPlanned = stat?.co2OffsetPlanned || 0n;
+          const tokenAmountPaid = stat?.tokenAmountPaid || 0n;
+          const co2ActuallyOffset = stat?.co2ActuallyOffset || 0n;
+          const fundingDateTimestamp = stat?.fundingDateTimestamp || 0n;
+          const projectId = stat?.projectId || 0n;
+          const regionalCode = stat?.regionalCode || 0n;
+          const category = stat?.category || 0n;
+          const openFundingOrClosed = stat?.openFundingOrClosed || false;
+          const metadataProject = stat?.metadataProject || "";
+          tokensData.push({ tokenId, owner, co2OffsetPlanned, tokenAmountPaid, co2ActuallyOffset, fundingDateTimestamp, projectId, regionalCode, category, openFundingOrClosed, metadataProject});
         //}
 
         setTokens(tokensData);
