@@ -49,7 +49,7 @@ const CreateProject: NextPage = () => {
     },
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     const projectData = {
@@ -90,19 +90,19 @@ const CreateProject: NextPage = () => {
           {/* CO2 Offset Planned */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">CO2 Offset Planned in Metric Tons</label>
-            <input type="number" value={co2OffsetPlanned} onChange={(e) => setCo2OffsetPlanned(parseInt(e.target.value))} className="input w-full mt-1" />
+            <input type="number" value={co2OffsetPlanned} onChange={(e:any) => setCo2OffsetPlanned(parseInt(e.target.value))} className="input w-full mt-1" />
           </div>
 
           {/* Token Amount Required */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Cost per Metric Ton</label>
-            <input type="number" value={tokenAmountRequired} onChange={(e) => setTokenAmountRequired(parseInt(e.target.value))} className="input w-full mt-1" />
+            <input type="number" value={tokenAmountRequired} onChange={(e:any) => setTokenAmountRequired(parseInt(e.target.value))} className="input w-full mt-1" />
           </div>
 
           {/* Regional Code */}
           <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Region</label>
-        <select value={regionalCode} onChange={(e) => setRegionalCode(parseInt(e.target.value))} className="block w-full mt-1">
+        <select value={regionalCode} onChange={(e:any) => setRegionalCode(parseInt(e.target.value))} className="block w-full mt-1">
           <option value="Global">Global</option>
           <option value="Africa">Africa</option>
           <option value="Asia">Asia</option>
@@ -116,7 +116,7 @@ const CreateProject: NextPage = () => {
          
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Category</label>
-        <select value={category} onChange={(e) => setCategory(parseInt(e.target.value))} className="block w-full mt-1">
+        <select value={category} onChange={(e:any) => setCategory(parseInt(e.target.value))} className="block w-full mt-1">
           {climateChangeCategories.map((cat, index) => (
             <option key={index} value={index}>{cat}</option>
           ))}
@@ -125,7 +125,7 @@ const CreateProject: NextPage = () => {
           {/* Is Project Open */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Is it a Global Fund Project?</label>
-            <select value={isProjectOpen} onChange={(e) => setIsProjectOpen(e.target.value === 'true')} className="block w-full mt-1">
+            <select value={isProjectOpen} onChange={(e:any) => setIsProjectOpen(e.target.value === 'true')} className="block w-full mt-1">
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
@@ -134,7 +134,7 @@ const CreateProject: NextPage = () => {
                     {/* Is Project Open */}
                     <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Have you been verified already?</label>
-            <select value={isProjectOpen} onChange={(e) => setIsProjectOpen(e.target.value === 'true')} className="block w-full mt-1">
+            <select value={isProjectOpen} onChange={(e:any) => setIsProjectOpen(e.target.value === 'true')} className="block w-full mt-1">
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
@@ -145,7 +145,7 @@ const CreateProject: NextPage = () => {
           {/* Metadata Project */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Description of your Project</label>
-            <input type="text" value={metadataProject} onChange={(e) => setMetadataProject(e.target.value)} className="input w-full mt-1" />
+            <input type="text" value={metadataProject} onChange={(e:any) => setMetadataProject(e.target.value)} className="input w-full mt-1" />
           </div>
 
 
