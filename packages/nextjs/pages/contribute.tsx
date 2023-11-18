@@ -48,11 +48,11 @@ const Contribute: NextPage = () => {
 
 
    // Function to handle quick selection buttons
-   const handleQuickSelect = (amount) => {
+   const handleQuickSelect = (amount: number) => {
     setCo2Percentage(amount);
   };
 
-  const handleCustomInput = (e) => {
+  const handleCustomInput = (e: any) => {
     const value = Math.min(Math.max(e.target.value, 5), maxCo2Offset);
     setCo2Percentage(value);
   };
@@ -101,7 +101,7 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
   ];
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
 
     const userChoices = {
@@ -136,7 +136,7 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
   };
 
 
-  const mockSubmit = (e) => {
+  const mockSubmit = (e: any) => {
     e.preventDefault();
 
     const userChoices = {
@@ -158,7 +158,7 @@ const peopleOffsetMessage = `You are offsetting more than ${Math.ceil(co2Percent
     // Process the contribution here 
   };
 
-  const handlePricePointSelect = (value) => {
+  const handlePricePointSelect = (value:any) => {
     setPricePoint(value);
   };
 
