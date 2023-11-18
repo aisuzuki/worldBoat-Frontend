@@ -33,7 +33,15 @@ const CreateProject: NextPage = () => {
     contractName: "WorldBoatProtocol",
     functionName: "createProject",
     // eslint-disable-next-line prettier/prettier
-    args: [/* your arguments here */],
+     args: [
+      // Assuming your contract expects the project data in this format
+      BigInt(100),
+      BigInt(100),
+      BigInt(0),
+      BigInt(0),
+      BigInt(0),
+      "hello"
+    ],
     value: 0n,
     blockConfirmations: 1,
     onBlockConfirmation: txnReceipt => {
