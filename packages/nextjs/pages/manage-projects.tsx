@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import { MetaHeader } from '~~/components/MetaHeader';
 import { useScaffoldContractRead } from '~~/hooks/scaffold-eth';
-
 import { useWalletClient } from 'wagmi';
 
 interface Token {
@@ -13,66 +12,60 @@ interface Token {
   fundingDateTimestamp: bigint;
   projectId: bigint;
   regionalCode: bigint;
-  category: bigint;
+  category: string;
   openFundingOrClosed: boolean;
   metadataProject: string;
-  tokenId: number; // Adjust based on your token ID type
+  tokenId: number;
 }
 
+
+const climateChangeCategories = [
+  "General Fund Green Energy",
+  "Renewable Energy Projects",
+  "Reforestation and Afforestation",
+  "Ocean Conservation",
+  "Wildlife Protection and Biodiversity",
+  "Sustainable Agriculture and Food Systems",
+  "Urban Greening and Sustainable Cities",
+  "Carbon Capture and Storage Technologies",
+  "Environmental Education and Awareness",
+  "Climate Resilience and Adaptation Projects",
+  "Pollution Reduction and Waste Management"
+];
+
 const ERC721TokensOverview: NextPage = () => {
+  const [tokens, setTokens] = useState<Token[]>([]);
+  const [expandedTokenId, setExpandedTokenId] = useState<number | null>(null);
+  const { data: walletClient } = useWalletClient();
 
-
-
-
-
-  // Setup contract write hook
   const { data: stat } = useScaffoldContractRead({
     contractName: "WorldBoatClimateActions",
     functionName: "getTokenStats",
     args: [1n],
-  }
-    
-  );
+  });
 
+  console.log(stat);
 
-  const [tokens, setTokens] = useState<Token[]>([]);
-  const [expandedTokenId, setExpandedTokenId] = useState<number | null>(null);
-  const { data: walletClient } = useWalletClient();
-  
-  console.log(stat)
-  console.log(walletClient)
   useEffect(() => {
-    const fetchTokens = async () => {
-      if (walletClient?.account.address) {
-        // Add logic to fetch token balance and token IDs
-        const balance = 1;
-        const tokensData: Token[] = [];
-
-        //for (let i = 0; i < balance; i++) {
-          const tokenIdArg = BigInt(1n);
-          // eslint-disable-next-line prettier/prettier
-
-
-          let tokenId = 1;
-          const owner = stat?.owner || "";
-          const co2OffsetPlanned = stat?.co2OffsetPlanned || 0n;
-          const tokenAmountPaid = stat?.tokenAmountPaid || 0n;
-          const co2ActuallyOffset = stat?.co2ActuallyOffset || 0n;
-          const fundingDateTimestamp = stat?.fundingDateTimestamp || 0n;
-          const projectId = stat?.projectId || 0n;
-          const regionalCode = stat?.regionalCode || 0n;
-          const category = stat?.category || 0n;
-          const openFundingOrClosed = stat?.openFundingOrClosed || false;
-          const metadataProject = stat?.metadataProject || "";
-          tokensData.push({ tokenId, owner, co2OffsetPlanned, tokenAmountPaid, co2ActuallyOffset, fundingDateTimestamp, projectId, regionalCode, category, openFundingOrClosed, metadataProject});
-        //}
-
-        setTokens(tokensData);
-      }
-    };
-
-    fetchTokens();
-  }, [walletClient?.account]);
+    // Assuming stat is updated with the contract read
+    if (stat) {
+      // Transform the stat object to the Token interface
+      const tokenData: Token = {
+        owner: stat.owner,
+        co2OffsetPlanned: stat.co2OffsetPlanned,
+        tokenAmountPaid: stat.tokenAmountPaid,
+        co2ActuallyOffset: stat.co2ActuallyOffset,
+        fundingDateTimestamp: stat.fundingDateTimestamp,
+        projectId: stat.projectId,
+        regionalCode: stat.regionalCode,
+        category: climateChangeCategories[Number(stat.category)] || "Unknown Category",
+        openFundingOrClosed: stat.openFundingOrClosed,
+        metadataProject: stat.metadataProject,
+        tokenId: 1 // Assuming tokenId is 1 for this example
+      };
+      setTokens([tokenData]);
+    }
+  }, [stat]);
 
   const toggleCard = (tokenId: number) => {
     setExpandedTokenId(expandedTokenId === tokenId ? null : tokenId);
@@ -84,19 +77,25 @@ const ERC721TokensOverview: NextPage = () => {
       <div className="container mx-auto p-6">
         <h1 className="text-3xl text-center mb-6">Your ERC721 Tokens</h1>
         <div className="flex overflow-x-auto gap-4">
-          {tokens.map((token) => (
-            <div key={token.tokenId} onClick={() => toggleCard(token.tokenId)}>
-              {/* Display token details here */}
-              <div className="p-4">
-                <h2>Token #{token.tokenId}</h2>
-                {expandedTokenId === token.tokenId && (
-                  <div>
-                    {/* Token details */}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+        {tokens.map((token) => (
+  <div key={token.tokenId.toString()} className="card bg-white shadow-lg rounded-lg p-4" onClick={() => toggleCard(token.tokenId)}>
+    <h2 className="text-xl font-semibold mb-2">Your Contributed Project: #{token.tokenId.toString()}</h2>
+    {expandedTokenId === token.tokenId && (
+      <div className="text-left">
+        <p><strong>Owner:</strong> {token.owner}</p>
+        <p><strong>CO2 Offset Planned:</strong> {token.co2OffsetPlanned.toString()}</p>
+        <p><strong>Token Amount Paid:</strong> {token.tokenAmountPaid.toString()}</p>
+        <p><strong>CO2 Actually Offset:</strong> {token.co2ActuallyOffset.toString()}</p>
+        <p><strong>Funding Date:</strong> {new Date(Number(token.fundingDateTimestamp * BigInt(1000))).toLocaleDateString()}</p>
+        <p><strong>Project ID:</strong> {token.projectId.toString()}</p>
+        <p><strong>Regional Code:</strong> {token.regionalCode.toString()}</p>
+        <p><strong>Category:</strong> {token.category.toString()}</p>
+        <p><strong>Project Status:</strong> {token.openFundingOrClosed ? 'Open' : 'Closed'}</p>
+        <p><strong>Project Description:</strong> {token.metadataProject}</p>
+      </div>
+    )}
+  </div>
+))}
         </div>
       </div>
     </>
